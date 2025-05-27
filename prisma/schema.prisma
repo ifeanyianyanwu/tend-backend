@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id              String          @id @default(uuid())
+  email           String          @unique
+  first_name      String
+  last_name       String
+  password_hash   String
+  created_at      DateTime        @default(now())
+  Event           Event[]
+  EventAttendee   EventAttendee[]
+  assigned_events EventScanner[]  @relation("Assigner")
+  scanned_events  EventScanner[]  @relation("Scanner")
+  EventMedia      EventMedia[]
+}
+
+model Event {
+  id            String          @id @default(uuid())
+  name          String
+  description   String?
+  start_time    DateTime
+  end_time      DateTime
+  location      String?
+  created_at    DateTime        @default(now())
+  creator       User            @relation(fields: [creator_id], references: [id])
+  creator_id    String
+  EventAttendee EventAttendee[]
+  EventScanner  EventScanner[]
+  EventMedia    EventMedia[]
+}
+
+model EventAttendee {
+  id            String    @id @default(uuid())
+  event         Event     @relation(fields: [event_id], references: [id])
+  event_id      String
+  user          User      @relation(fields: [user_id], references: [id])
+  user_id       String
+  registered_at DateTime  @default(now())
+  ticket_qr     String?   @unique
+  status        String    @default("registered") // e.g., registered, checked-in, cancelled
+  ticket_used   DateTime? // Timestamp when the ticket was used
+}
+
+model EventScanner {
+  id          String   @id @default(uuid())
+  event       Event    @relation(fields: [event_id], references: [id])
+  event_id    String
+  scanner     User     @relation("Scanner", fields: [user_id], references: [id])
+  user_id     String
+  assigned_by User     @relation("Assigner", fields: [assigner_id], references: [id])
+  assigner_id String
+  created_at  DateTime @default(now())
+}
+
+model EventMedia {
+  id          String   @id @default(uuid())
+  event       Event    @relation(fields: [event_id], references: [id])
+  event_id    String
+  uploaded_by User     @relation(fields: [user_id], references: [id])
+  user_id     String
+  media_url   String
+  caption     String?
+  uploaded_at DateTime @default(now())
+}
