@@ -1363,7 +1363,7 @@ export namespace Prisma {
     email: string | null
     first_name: string | null
     last_name: string | null
-    password_hash: string | null
+    password: string | null
     created_at: Date | null
   }
 
@@ -1372,7 +1372,7 @@ export namespace Prisma {
     email: string | null
     first_name: string | null
     last_name: string | null
-    password_hash: string | null
+    password: string | null
     created_at: Date | null
   }
 
@@ -1381,7 +1381,7 @@ export namespace Prisma {
     email: number
     first_name: number
     last_name: number
-    password_hash: number
+    password: number
     created_at: number
     _all: number
   }
@@ -1392,7 +1392,7 @@ export namespace Prisma {
     email?: true
     first_name?: true
     last_name?: true
-    password_hash?: true
+    password?: true
     created_at?: true
   }
 
@@ -1401,7 +1401,7 @@ export namespace Prisma {
     email?: true
     first_name?: true
     last_name?: true
-    password_hash?: true
+    password?: true
     created_at?: true
   }
 
@@ -1410,7 +1410,7 @@ export namespace Prisma {
     email?: true
     first_name?: true
     last_name?: true
-    password_hash?: true
+    password?: true
     created_at?: true
     _all?: true
   }
@@ -1492,7 +1492,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1518,7 +1518,7 @@ export namespace Prisma {
     email?: boolean
     first_name?: boolean
     last_name?: boolean
-    password_hash?: boolean
+    password?: boolean
     created_at?: boolean
     Event?: boolean | User$EventArgs<ExtArgs>
     EventAttendee?: boolean | User$EventAttendeeArgs<ExtArgs>
@@ -1533,7 +1533,7 @@ export namespace Prisma {
     email?: boolean
     first_name?: boolean
     last_name?: boolean
-    password_hash?: boolean
+    password?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1542,7 +1542,7 @@ export namespace Prisma {
     email?: boolean
     first_name?: boolean
     last_name?: boolean
-    password_hash?: boolean
+    password?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1551,11 +1551,11 @@ export namespace Prisma {
     email?: boolean
     first_name?: boolean
     last_name?: boolean
-    password_hash?: boolean
+    password?: boolean
     created_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "first_name" | "last_name" | "password_hash" | "created_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "first_name" | "last_name" | "password" | "created_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Event?: boolean | User$EventArgs<ExtArgs>
     EventAttendee?: boolean | User$EventAttendeeArgs<ExtArgs>
@@ -1581,7 +1581,7 @@ export namespace Prisma {
       email: string
       first_name: string
       last_name: string
-      password_hash: string
+      password: string
       created_at: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -2015,7 +2015,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly first_name: FieldRef<"User", 'String'>
     readonly last_name: FieldRef<"User", 'String'>
-    readonly password_hash: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
     readonly created_at: FieldRef<"User", 'DateTime'>
   }
     
@@ -6990,7 +6990,7 @@ export namespace Prisma {
     email: 'email',
     first_name: 'first_name',
     last_name: 'last_name',
-    password_hash: 'password_hash',
+    password: 'password',
     created_at: 'created_at'
   };
 
@@ -7129,7 +7129,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
-    password_hash?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
     created_at?: DateTimeFilter<"User"> | Date | string
     Event?: EventListRelationFilter
     EventAttendee?: EventAttendeeListRelationFilter
@@ -7143,7 +7143,7 @@ export namespace Prisma {
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
-    password_hash?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     Event?: EventOrderByRelationAggregateInput
     EventAttendee?: EventAttendeeOrderByRelationAggregateInput
@@ -7160,7 +7160,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
-    password_hash?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
     created_at?: DateTimeFilter<"User"> | Date | string
     Event?: EventListRelationFilter
     EventAttendee?: EventAttendeeListRelationFilter
@@ -7174,7 +7174,7 @@ export namespace Prisma {
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
-    password_hash?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -7189,7 +7189,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     first_name?: StringWithAggregatesFilter<"User"> | string
     last_name?: StringWithAggregatesFilter<"User"> | string
-    password_hash?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -7469,7 +7469,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeCreateNestedManyWithoutUserInput
@@ -7483,7 +7483,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventUncheckedCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeUncheckedCreateNestedManyWithoutUserInput
@@ -7497,7 +7497,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUpdateManyWithoutUserNestedInput
@@ -7511,7 +7511,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUncheckedUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUncheckedUpdateManyWithoutUserNestedInput
@@ -7525,7 +7525,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
   }
 
@@ -7534,7 +7534,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7543,7 +7543,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7888,7 +7888,7 @@ export namespace Prisma {
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
-    password_hash?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
   }
 
@@ -7897,7 +7897,7 @@ export namespace Prisma {
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
-    password_hash?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
   }
 
@@ -7906,7 +7906,7 @@ export namespace Prisma {
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
-    password_hash?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
   }
 
@@ -9000,7 +9000,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     EventAttendee?: EventAttendeeCreateNestedManyWithoutUserInput
     assigned_events?: EventScannerCreateNestedManyWithoutAssigned_byInput
@@ -9013,7 +9013,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     EventAttendee?: EventAttendeeUncheckedCreateNestedManyWithoutUserInput
     assigned_events?: EventScannerUncheckedCreateNestedManyWithoutAssigned_byInput
@@ -9120,7 +9120,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     EventAttendee?: EventAttendeeUpdateManyWithoutUserNestedInput
     assigned_events?: EventScannerUpdateManyWithoutAssigned_byNestedInput
@@ -9133,7 +9133,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     EventAttendee?: EventAttendeeUncheckedUpdateManyWithoutUserNestedInput
     assigned_events?: EventScannerUncheckedUpdateManyWithoutAssigned_byNestedInput
@@ -9225,7 +9225,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventCreateNestedManyWithoutCreatorInput
     assigned_events?: EventScannerCreateNestedManyWithoutAssigned_byInput
@@ -9238,7 +9238,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventUncheckedCreateNestedManyWithoutCreatorInput
     assigned_events?: EventScannerUncheckedCreateNestedManyWithoutAssigned_byInput
@@ -9304,7 +9304,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUpdateManyWithoutCreatorNestedInput
     assigned_events?: EventScannerUpdateManyWithoutAssigned_byNestedInput
@@ -9317,7 +9317,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUncheckedUpdateManyWithoutCreatorNestedInput
     assigned_events?: EventScannerUncheckedUpdateManyWithoutAssigned_byNestedInput
@@ -9361,7 +9361,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeCreateNestedManyWithoutUserInput
@@ -9374,7 +9374,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventUncheckedCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeUncheckedCreateNestedManyWithoutUserInput
@@ -9392,7 +9392,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeCreateNestedManyWithoutUserInput
@@ -9405,7 +9405,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventUncheckedCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeUncheckedCreateNestedManyWithoutUserInput
@@ -9471,7 +9471,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUpdateManyWithoutUserNestedInput
@@ -9484,7 +9484,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUncheckedUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUncheckedUpdateManyWithoutUserNestedInput
@@ -9508,7 +9508,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUpdateManyWithoutUserNestedInput
@@ -9521,7 +9521,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUncheckedUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUncheckedUpdateManyWithoutUserNestedInput
@@ -9565,7 +9565,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeCreateNestedManyWithoutUserInput
@@ -9578,7 +9578,7 @@ export namespace Prisma {
     email: string
     first_name: string
     last_name: string
-    password_hash: string
+    password: string
     created_at?: Date | string
     Event?: EventUncheckedCreateNestedManyWithoutCreatorInput
     EventAttendee?: EventAttendeeUncheckedCreateNestedManyWithoutUserInput
@@ -9644,7 +9644,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUpdateManyWithoutUserNestedInput
@@ -9657,7 +9657,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Event?: EventUncheckedUpdateManyWithoutCreatorNestedInput
     EventAttendee?: EventAttendeeUncheckedUpdateManyWithoutUserNestedInput
