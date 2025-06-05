@@ -173,7 +173,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/stephanie/Documents/Personal Projects/tend/generated/prisma",
+      "value": "/Users/ifeanyianyanwu/Documents/Code/Tend (Event Management System)/tend/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -182,12 +182,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "darwin",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/stephanie/Documents/Personal Projects/tend/prisma/schema.prisma",
+    "sourceFilePath": "/Users/ifeanyianyanwu/Documents/Code/Tend (Event Management System)/tend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -200,7 +200,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
