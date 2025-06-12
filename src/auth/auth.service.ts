@@ -5,9 +5,9 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { Prisma } from 'generated/prisma';
-import { jwtConstants } from './constants';
 import { PrismaService } from 'src/prisma.service';
 import JwtPayload from './interfaces/jwt-payload';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +15,7 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     private prismaService: PrismaService,
+    private configService: ConfigService,
   ) {}
 
   async validateUser({ email, password }: LoginDto) {
@@ -60,7 +61,7 @@ export class AuthService {
   async refreshTokens(refresh_token: string) {
     try {
       const validatedToken: JwtPayload = this.jwtService.verify(refresh_token, {
-        secret: jwtConstants.jwt_refresh_secret,
+        secret: this.configService.get('jwt.refresh_secret'),
       });
 
       const token = await this.findRefreshToken(refresh_token);
@@ -71,6 +72,11 @@ export class AuthService {
           validatedToken.email,
         );
         return { access_token: newTokens.access_token };
+      } else {
+        throw new HttpException(
+          'Invalid refresh token',
+          HttpStatus.UNAUTHORIZED,
+        );
       }
     } catch (error) {
       const token = await this.findRefreshToken(refresh_token);
@@ -124,11 +130,11 @@ export class AuthService {
 
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(payload, {
-        secret: jwtConstants.jwt_access_secret,
+        secret: this.configService.get('jwt.access_secret'),
         expiresIn: '10s',
       }),
       this.jwtService.signAsync(payload, {
-        secret: jwtConstants.jwt_refresh_secret,
+        secret: this.configService.get('jwt.refresh_secret'),
         expiresIn: '10m',
       }),
     ]);
