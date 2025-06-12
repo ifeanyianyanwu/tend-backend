@@ -77,3 +77,10 @@ model EventMedia {
   caption     String?
   uploaded_at DateTime @default(now())
 }
+
+model RefreshToken {
+  id            String   @id @default(uuid())
+  lookup_prefix String   @unique
+  refresh_token String   @unique
+  created_at    DateTime @default(now())
+}

@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate": "ts-node scripts/migrate.ts"
+    "migrate": "ts-node src/scripts/migrate.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import { LocalAuthGuard } from './local-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Prisma } from 'generated/prisma';
 
 interface RequestWithUser extends Request {
@@ -21,5 +21,15 @@ export class AuthController {
   @Post('signin')
   signIn(@Request() req: RequestWithUser) {
     return this.authService.login(req.user);
+  }
+
+  @Post('refresh')
+  refreshToken(@Body() body: { refresh_token: string }) {
+    return this.authService.refreshTokens(body.refresh_token);
+  }
+
+  @Post('logout')
+  logout(@Body() body: { refresh_token: string }) {
+    return this.authService.logout(body.refresh_token);
   }
 }

@@ -5,12 +5,16 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { Prisma } from 'generated/prisma';
+import { jwtConstants } from './constants';
+import { PrismaService } from 'src/prisma.service';
+import JwtPayload from './interfaces/jwt-payload';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private prismaService: PrismaService,
   ) {}
 
   async validateUser({ email, password }: LoginDto) {
@@ -47,13 +51,98 @@ export class AuthService {
     };
   }
 
-  login(user: Prisma.UserCreateInput) {
-    const payload = { sub: user.id, email: user.email };
+  async login(user: Prisma.UserCreateInput) {
+    const tokens = await this.generateTokens(user.id as string, user.email);
+    await this.updateRefreshToken(tokens.refresh_token);
+    return tokens;
+  }
 
-    const access_token = this.jwtService.sign(payload);
-    return { access_token };
+  async refreshTokens(refresh_token: string) {
+    try {
+      const validatedToken: JwtPayload = this.jwtService.verify(refresh_token, {
+        secret: jwtConstants.jwt_refresh_secret,
+      });
+
+      const token = await this.findRefreshToken(refresh_token);
+
+      if (token) {
+        const newTokens = await this.generateTokens(
+          validatedToken.sub as string,
+          validatedToken.email,
+        );
+        return { access_token: newTokens.access_token };
+      }
+    } catch (error) {
+      const token = await this.findRefreshToken(refresh_token);
+      if (token) {
+        await this.deleteRefreshToken(refresh_token);
+      }
+      console.log(error);
+      throw new HttpException('Invalid refresh token', HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  async logout(refresh_token: string) {
+    const token = await this.findRefreshToken(refresh_token);
+    if (token) {
+      await this.deleteRefreshToken(refresh_token);
+    }
+    return;
   }
 
   async resetPassword() {}
   async verifyEmail() {}
+
+  async deleteRefreshToken(refresh_token: string) {
+    await this.prismaService.refreshToken.delete({
+      where: { lookup_prefix: this.splitStringInHalf(refresh_token)[0] },
+    });
+  }
+
+  async findRefreshToken(data: string) {
+    return await this.prismaService.refreshToken.findUnique({
+      where: { lookup_prefix: this.splitStringInHalf(data)[0] },
+    });
+  }
+
+  async updateRefreshToken(refresh_token: string) {
+    const rtHash = await this.hashData(refresh_token);
+    const [lookup_prefix] = this.splitStringInHalf(refresh_token);
+
+    const data = { refresh_token: rtHash, lookup_prefix };
+    return await this.prismaService.refreshToken.create({
+      data,
+    });
+  }
+
+  async hashData(data: string) {
+    return await bcrypt.hash(data, 12);
+  }
+
+  async generateTokens(user_id: string, email: string) {
+    const payload = { sub: user_id, email: email };
+
+    const [access_token, refresh_token] = await Promise.all([
+      this.jwtService.signAsync(payload, {
+        secret: jwtConstants.jwt_access_secret,
+        expiresIn: '10s',
+      }),
+      this.jwtService.signAsync(payload, {
+        secret: jwtConstants.jwt_refresh_secret,
+        expiresIn: '10m',
+      }),
+    ]);
+
+    return { access_token, refresh_token };
+  }
+
+  splitStringInHalf(str: string): [string, string] {
+    if (!str) return ['', ''];
+
+    const middle = Math.floor(str.length / 2);
+    const firstHalf = str.slice(0, middle);
+    const secondHalf = str.slice(middle);
+
+    return [firstHalf, secondHalf];
+  }
 }
