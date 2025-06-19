@@ -1,21 +1,22 @@
 import { Exclude, Expose } from 'class-transformer';
-import { IsString } from 'class-validator';
 
 @Exclude()
-export class UserReturnDto {
+export class UserEntity {
   @Expose()
-  @IsString()
   id: string;
-
   @Expose()
-  @IsString()
   first_name: string;
-
   @Expose()
-  @IsString()
   last_name: string;
-
   @Expose()
-  @IsString()
   email: string;
+  @Expose()
+  created_at: Date;
+
+  @Exclude()
+  password: string;
+
+  constructor(partial: Partial<UserEntity>) {
+    Object.assign(this, partial);
+  }
 }

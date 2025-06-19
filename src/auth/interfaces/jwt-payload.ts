@@ -1,4 +1,4 @@
 export default interface JwtPayload {
-  sub: string | undefined;
+  sub: string;
   email: string;
 }
