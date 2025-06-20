@@ -8,6 +8,7 @@ import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
 import JwtPayload from './interfaces/jwt-payload';
 import { ConfigService } from '@nestjs/config';
+import { UserEntity } from 'src/user/dto/user-entity.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,9 +23,7 @@ export class AuthService {
     const existingUser = await this.userService.findByEmail(email);
 
     if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
-      // eslint-disable-next-line
-      const { password, ...rest } = existingUser;
-      return rest;
+      return new UserEntity(existingUser);
     }
     return null;
   }
@@ -45,11 +44,7 @@ export class AuthService {
       email: email,
     });
 
-    return {
-      first_name: newUser.first_name,
-      last_name: newUser.last_name,
-      email: newUser.email,
-    };
+    return new UserEntity(newUser);
   }
 
   async login(user: Prisma.UserCreateInput) {
@@ -67,8 +62,10 @@ export class AuthService {
       const token = await this.findRefreshToken(refresh_token);
 
       if (token) {
+        await bcrypt.compare(refresh_token, token.refresh_token);
+
         const newTokens = await this.generateTokens(
-          validatedToken.sub as string,
+          validatedToken.sub,
           validatedToken.email,
         );
         return { access_token: newTokens.access_token };
@@ -96,28 +93,29 @@ export class AuthService {
     return;
   }
 
+  // needs email service implementation
   async resetPassword() {}
   async verifyEmail() {}
 
-  async deleteRefreshToken(refresh_token: string) {
-    await this.prismaService.refreshToken.delete({
-      where: { lookup_prefix: this.splitStringInHalf(refresh_token)[0] },
-    });
-  }
-
-  async findRefreshToken(data: string) {
+  async findRefreshToken(refresh_token: string) {
     return await this.prismaService.refreshToken.findUnique({
-      where: { lookup_prefix: this.splitStringInHalf(data)[0] },
+      where: { lookup_prefix: this.splitStringInHalf(refresh_token)[1] },
     });
   }
 
   async updateRefreshToken(refresh_token: string) {
     const rtHash = await this.hashData(refresh_token);
-    const [lookup_prefix] = this.splitStringInHalf(refresh_token);
+    const [, lookup_prefix] = this.splitStringInHalf(refresh_token);
 
     const data = { refresh_token: rtHash, lookup_prefix };
     return await this.prismaService.refreshToken.create({
       data,
+    });
+  }
+
+  async deleteRefreshToken(refresh_token: string) {
+    await this.prismaService.refreshToken.delete({
+      where: { lookup_prefix: this.splitStringInHalf(refresh_token)[1] },
     });
   }
 
@@ -127,18 +125,16 @@ export class AuthService {
 
   async generateTokens(user_id: string, email: string) {
     const payload = { sub: user_id, email: email };
-
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: this.configService.get('jwt.access_secret'),
-        expiresIn: '10s',
+        expiresIn: '5m',
       }),
       this.jwtService.signAsync(payload, {
         secret: this.configService.get('jwt.refresh_secret'),
-        expiresIn: '10m',
+        expiresIn: '15m',
       }),
     ]);
-
     return { access_token, refresh_token };
   }
 
