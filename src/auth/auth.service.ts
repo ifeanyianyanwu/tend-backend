@@ -119,8 +119,8 @@ export class AuthService {
     });
   }
 
-  async hashData(data: string) {
-    return await bcrypt.hash(data, 12);
+  hashData(data: string) {
+    return bcrypt.hash(data, 12);
   }
 
   async generateTokens(user_id: string, email: string) {
@@ -128,11 +128,11 @@ export class AuthService {
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: this.configService.get('jwt.access_secret'),
-        expiresIn: '5m',
+        expiresIn: this.configService.get('jwt.access_secret_expires_in'),
       }),
       this.jwtService.signAsync(payload, {
         secret: this.configService.get('jwt.refresh_secret'),
-        expiresIn: '15m',
+        expiresIn: this.configService.get('jwt.access_secret_expires_in'),
       }),
     ]);
     return { access_token, refresh_token };
