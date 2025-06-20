@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Prisma } from 'generated/prisma';
+import { LoginDto } from './dto/login.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 interface RequestWithUser extends Request {
   user: Prisma.UserCreateInput;
@@ -19,17 +21,17 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  signIn(@Request() req: RequestWithUser) {
+  signIn(@Request() req: RequestWithUser, @Body() _body: LoginDto) {
     return this.authService.login(req.user);
   }
 
   @Post('refresh')
-  refreshToken(@Body() body: { refresh_token: string }) {
+  refreshToken(@Body() body: RefreshTokenDto) {
     return this.authService.refreshTokens(body.refresh_token);
   }
 
   @Post('logout')
-  logout(@Body() body: { refresh_token: string }) {
+  logout(@Body() body: RefreshTokenDto) {
     return this.authService.logout(body.refresh_token);
   }
 }

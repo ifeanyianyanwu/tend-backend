@@ -62,6 +62,8 @@ export class AuthService {
       const token = await this.findRefreshToken(refresh_token);
 
       if (token) {
+        await bcrypt.compare(refresh_token, token.refresh_token);
+
         const newTokens = await this.generateTokens(
           validatedToken.sub,
           validatedToken.email,
