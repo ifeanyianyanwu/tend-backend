@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Request,
   UseGuards,
@@ -9,10 +10,7 @@ import {
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
-
-export interface RequestWithUser extends Request {
-  user: { userId: string; email: string };
-}
+import { RequestWithUser } from 'src/interfaces';
 
 @Controller('user')
 export class UserController {
@@ -22,6 +20,12 @@ export class UserController {
   @Get('details')
   getUserDetails(@Request() req: RequestWithUser) {
     return this.userService.findById(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  getUserDetailsById(@Param('id') id: string) {
+    return this.userService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)

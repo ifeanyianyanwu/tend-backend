@@ -70,10 +70,7 @@ export class AuthService {
         );
         return { access_token: newTokens.access_token };
       } else {
-        throw new HttpException(
-          'Invalid refresh token',
-          HttpStatus.UNAUTHORIZED,
-        );
+        throw new Error('Invalid refresh token');
       }
     } catch (error) {
       const token = await this.findRefreshToken(refresh_token);
