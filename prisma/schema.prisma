@@ -39,6 +39,7 @@ model Event {
   created_at    DateTime        @default(now())
   creator       User            @relation(fields: [creator_id], references: [id])
   creator_id    String
+  status        String          @default("upcoming") // e.g., upcoming, ongoing, completed, cancelled
   EventAttendee EventAttendee[]
   EventScanner  EventScanner[]
   EventMedia    EventMedia[]

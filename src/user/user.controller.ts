@@ -12,12 +12,12 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RequestWithUser } from 'src/interfaces';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('details')
+  @Get('current')
   getUserDetails(@Request() req: RequestWithUser) {
     return this.userService.findById(req.user.userId);
   }
@@ -29,7 +29,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('details')
+  @Patch('current')
   updateUserDetails(
     @Request() req: RequestWithUser,
     @Body() body: UpdateUserDto,
