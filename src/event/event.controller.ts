@@ -8,14 +8,16 @@ import {
   Delete,
   Request,
   UseGuards,
+  Query,
 } from '@nestjs/common';
-import { EventService } from './event.service';
+import { EventService } from './services/event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { RequestWithUser } from 'src/interfaces';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { FilterDto } from './dto/filter-event.dto';
 
-@Controller('event')
+@Controller('events')
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
@@ -29,8 +31,8 @@ export class EventController {
   }
 
   @Get()
-  findAll() {
-    return this.eventService.findAll();
+  findAll(@Query() filters: FilterDto) {
+    return this.eventService.findAll(filters);
   }
 
   @Get(':id')
