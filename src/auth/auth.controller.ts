@@ -14,13 +14,13 @@ interface RequestWithUser extends Request {
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('signup')
+  @Post('register')
   signUp(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
   @UseGuards(LocalAuthGuard)
-  @Post('signin')
+  @Post('login')
   signIn(@Request() req: RequestWithUser, @Body() _body: LoginDto) {
     return this.authService.login(req.user);
   }

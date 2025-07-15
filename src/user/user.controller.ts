@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Request,
   UseGuards,
@@ -9,23 +10,26 @@ import {
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RequestWithUser } from 'src/interfaces';
 
-export interface RequestWithUser extends Request {
-  user: { userId: string; email: string };
-}
-
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('details')
+  @Get('current')
   getUserDetails(@Request() req: RequestWithUser) {
     return this.userService.findById(req.user.userId);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('details')
+  @Get(':id')
+  getUserDetailsById(@Param('id') id: string) {
+    return this.userService.findById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('current')
   updateUserDetails(
     @Request() req: RequestWithUser,
     @Body() body: UpdateUserDto,
