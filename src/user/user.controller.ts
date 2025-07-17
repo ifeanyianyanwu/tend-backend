@@ -4,13 +4,15 @@ import {
   Get,
   Param,
   Patch,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { RequestWithUser } from 'src/interfaces';
+import { RequestWithUser } from 'src/common/interfaces';
+import { FindUserEventsDto } from './dto/find-user-events.dto';
 
 @Controller('users')
 export class UserController {
@@ -35,5 +37,14 @@ export class UserController {
     @Body() body: UpdateUserDto,
   ) {
     return this.userService.update(req.user.userId, body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('current/events')
+  getUserEvents(
+    @Request() req: RequestWithUser,
+    @Query() query: FindUserEventsDto,
+  ) {
+    return this.userService.findUserEvents(req.user.userId, query.role);
   }
 }

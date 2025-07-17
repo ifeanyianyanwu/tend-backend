@@ -13,7 +13,7 @@ import {
 import { EventService } from './services/event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { RequestWithUser } from 'src/interfaces';
+import { RequestWithUser } from 'src/common/interfaces';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { FilterDto } from './dto/filter-event.dto';
 

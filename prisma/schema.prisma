@@ -39,21 +39,21 @@ model Event {
   created_at    DateTime        @default(now())
   creator       User            @relation(fields: [creator_id], references: [id])
   creator_id    String
-  status        String          @default("upcoming") // e.g., upcoming, ongoing, completed, cancelled
+  status        EventStatus     @default(UPCOMING)
   EventAttendee EventAttendee[]
   EventScanner  EventScanner[]
   EventMedia    EventMedia[]
 }
 
 model EventAttendee {
-  id            String    @id @default(uuid())
-  event         Event     @relation(fields: [event_id], references: [id])
+  id            String         @id @default(uuid())
+  event         Event          @relation(fields: [event_id], references: [id])
   event_id      String
-  user          User      @relation(fields: [user_id], references: [id])
+  user          User           @relation(fields: [user_id], references: [id])
   user_id       String
-  registered_at DateTime  @default(now())
-  ticket_qr     String?   @unique
-  status        String    @default("registered") // e.g., registered, checked-in, cancelled
+  registered_at DateTime       @default(now())
+  ticket_qr     String?        @unique
+  status        AttendeeStatus @default(REGISTERED)
   ticket_used   DateTime? // Timestamp when the ticket was used
 }
 
@@ -84,4 +84,17 @@ model RefreshToken {
   lookup_prefix String   @unique
   refresh_token String   @unique
   created_at    DateTime @default(now())
+}
+
+enum AttendeeStatus {
+  REGISTERED
+  CHECKED_IN
+  CANCELLED
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
 }

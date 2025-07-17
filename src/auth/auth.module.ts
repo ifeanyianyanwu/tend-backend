@@ -5,7 +5,7 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/common/prisma.service';
 
 @Module({
   imports: [UserModule, JwtModule.register({})],
