@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service.js';
+import { PrismaService } from '../common/prisma.service.js';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './dto/user-entity.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
+import { UserRole } from 'src/common/enums/user-role.enum.js';
 
 @Injectable()
 export class UserService {
@@ -36,5 +37,27 @@ export class UserService {
       data: updateUserDto,
     });
     return new UserEntity(user);
+  }
+
+  findUserEvents(userId: string, role: UserRole) {
+    if (role === UserRole.Creator) {
+      return this.prisma.event.findMany({
+        where: { creator_id: userId },
+      });
+    } else if (role === UserRole.Attendee) {
+      return this.prisma.eventAttendee
+        .findMany({
+          where: { user_id: userId },
+          include: { event: true },
+        })
+        .then((attendes) => attendes.map((attende) => attende.event));
+    } else if (role === UserRole.Scanner) {
+      return this.prisma.eventScanner
+        .findMany({
+          where: { user_id: userId },
+          include: { event: true },
+        })
+        .then((scanners) => scanners.map((scanner) => scanner.event));
+    }
   }
 }
